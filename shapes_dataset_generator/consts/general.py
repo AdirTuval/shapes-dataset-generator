@@ -1,0 +1,11 @@
+from .colors import Color
+from .shapes import Shape
+
+DEFAULT_SAMPLE_SIZE: float = 10
+DEFAULT_SAMPLE_COLOR: Color = Color.BLACK
+DEFAULT_SAMPLE_SHAPE: Shape = Shape.SQUARE
+
+DEFAULT_CANVAS_WIDTH: int = 64
+DEFAULT_CANVAS_HEIGHT: int = 64
+DEFAULT_CANVAS_BACKGROUND_COLOR: str = "white"
+ANTIALIAS: int = 2
