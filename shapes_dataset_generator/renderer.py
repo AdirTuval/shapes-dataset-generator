@@ -4,11 +4,8 @@ from shapes_dataset_generator.shapes_dataset_generator.consts import (
     DEFAULT_CANVAS_WIDTH,
     DEFAULT_CANVAS_HEIGHT,
     DEFAULT_CANVAS_BACKGROUND_COLOR,
-    ANTIALIAS
+    ANTIALIAS,
 )
-
-
-
 
 
 class PILRenderer:
