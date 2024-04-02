@@ -1,3 +1,4 @@
+import numpy as np
 from shapes_dataset_generator.shapes_dataset_generator.consts import (
     Shape,
     Color,
@@ -22,8 +23,8 @@ class SampleConfig:
         color: Color = DEFAULT_SAMPLE_COLOR,
     ):
         self.x: float = x
-        self.y: float = y
         self.shape: Shape = shape
+        self.y: float = y
         self.color: Color = color
         self.size: float = size
 
