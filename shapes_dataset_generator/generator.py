@@ -37,15 +37,8 @@ class ShapesDatasetGenerator:
         """
         Generate latent vectors for the dataset.
         """
-        # dist = Beta(torch.tensor([2.]), torch.tensor([5.]))
-        # self.latents = dist.sample((self.n_samples, 2)).numpy().reshape((self.n_samples, 2))
-        self.latents = np.array([
-            [0.1, 0.1],
-            [0.3, 0.3],
-            [0.5, 0.5],
-            [0.7, 0.7],
-            [0.9, 0.9],
-        ])
+        dist = Beta(torch.tensor([2.]), torch.tensor([5.]))
+        self.latents = dist.sample((self.n_samples, 2)).numpy().reshape((self.n_samples, 2))
         
     def generate_samples(self):
         """
