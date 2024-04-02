@@ -22,21 +22,19 @@ class PILRenderer:
 
         # Set the configuration
         self.enlarged_canvas_size: tuple = (
-            self.config[CANVAS_SIZE] * config[ANTI_ALIAS],
-            self.config[CANVAS_SIZE] * config[ANTI_ALIAS],
+            self.config[CANVAS_SIZE] * self.config[ANTI_ALIAS],
+            self.config[CANVAS_SIZE] * self.config[ANTI_ALIAS],
         )
         self.original_canvas_size: tuple = (
             self.config[CANVAS_SIZE],
             self.config[CANVAS_SIZE],
         )
-        self.background_color: str = self.config[BACKGROUND_COLOR]
-        self.anti_alias: int = config[ANTI_ALIAS]
-
+        
         # Reusable background
         self.canvas_background = Image.new(
             "RGB",
             self.enlarged_canvas_size,
-            self.background_color,
+            self.config[BACKGROUND_COLOR],
         )
 
         # Active canvas
