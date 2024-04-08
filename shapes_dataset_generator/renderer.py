@@ -57,8 +57,7 @@ class PILRenderer:
         # Draw the shape
         self.draw.regular_polygon(
             (
-                sample_config.x * self.enlarged_canvas_size[0],
-                sample_config.y * self.enlarged_canvas_size[1],
+                *self.convert_sample_coordinates_to_image_coordinates(sample_config),
                 self.get_sample_radius(sample_config.size),
             ),
             sample_config.get_n_sides(),
@@ -96,7 +95,36 @@ class PILRenderer:
         Returns:
         - radius: A float.
         """
-        return size * (self.enlarged_canvas_size[0] / 2) * (2 ** 0.5)
+        return (self.get_sample_width(size / 2)) * (2 ** 0.5)
+    
+    def get_sample_width(self, size: float) -> float:
+        """
+        Get the width of the sample.
+
+        Args:
+        - size: A float.
+
+        Returns:
+        - width: A float.
+        """
+        return size * self.enlarged_canvas_size[0]
+    
+    def convert_sample_coordinates_to_image_coordinates(self, sample_config : SampleConfig) -> tuple:
+        """
+        Convert the sample coordinates to image coordinates.
+
+        Args:
+        - sample_config: A SampleConfig object.
+
+        Returns:
+        - coordinates: A tuple of floats.
+        """
+        x, y, size = sample_config.x, sample_config.y, sample_config.size
+        offset = self.get_sample_width(size) / 2
+        effective_canvas_width_and_height = self.enlarged_canvas_size[0] - (offset * 2)
+        x_coord = effective_canvas_width_and_height * x + offset
+        y_coord = effective_canvas_width_and_height * y + offset
+        return x_coord, y_coord
 
     @staticmethod
     def get_default_config() -> dict:
