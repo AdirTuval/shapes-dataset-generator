@@ -14,17 +14,12 @@ class ShapesDatasetGenerator:
 
     def __init__(
         self,
-        random_seed: int = 42,
         render_config: Union[dict, None] = None,
     ):
         self.latents: np.array = None
         self.samples: np.array = None
         self.renderer = PILRenderer(render_config)
         # self.sampler = Sampler(dist_config)
-
-        # Set random seed
-        np.random.seed(random_seed)
-        torch.manual_seed(random_seed)
 
     def generate(self, n_samples: int = 1):
         """
