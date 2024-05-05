@@ -8,6 +8,8 @@ DISTRIBUTIONS_DICT = {
 
 class Sampler:
     def __init__(self, config: Union[dict, None] = None):
+        if config is None:
+            config = {"type": "uniform", "params": [0.0, 1.0]}
         dist_fn = DISTRIBUTIONS_DICT[config["type"]]
         self.dist = dist_fn(*config["params"])
         

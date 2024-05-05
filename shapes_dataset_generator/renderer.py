@@ -4,12 +4,14 @@ from shapes_dataset_generator.shapes_dataset_generator.sample_config import Samp
 from shapes_dataset_generator.shapes_dataset_generator.consts import (
     DEFAULT_CANVAS_SIZE,
     DEFAULT_CANVAS_BACKGROUND_COLOR,
+    DEFAULT_SAMPLE_COLOR,
     ANTIALIAS,
 )
 
 CANVAS_SIZE = "canvas_size"
 BACKGROUND_COLOR = "background_color"
 ANTI_ALIAS = "anti_alias"
+SAMPLE_COLOR = "sample_color"
 
 
 class PILRenderer:
@@ -54,6 +56,9 @@ class PILRenderer:
         # Reset the canvas
         self.canvas.paste(self.canvas_background)
 
+        # is constant sample color
+        sample_color = self.config[SAMPLE_COLOR] if SAMPLE_COLOR in self.config else sample_config.get_color()
+
         # Draw the shape
         self.draw.regular_polygon(
             (
@@ -61,7 +66,7 @@ class PILRenderer:
                 self.get_sample_radius(sample_config.size),
             ),
             sample_config.get_n_sides(),
-            fill=sample_config.get_color(),
+            fill=sample_color,
         )
 
         # Resize the image
