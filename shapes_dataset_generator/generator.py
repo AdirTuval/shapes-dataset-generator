@@ -5,6 +5,7 @@ from torch.distributions.beta import Beta
 
 from shapes_dataset_generator.shapes_dataset_generator.sample_config import SampleConfig
 from shapes_dataset_generator.shapes_dataset_generator.renderer import PILRenderer
+from shapes_dataset_generator.shapes_dataset_generator.sampler import Sampler
 
 
 class ShapesDatasetGenerator:
@@ -15,11 +16,12 @@ class ShapesDatasetGenerator:
     def __init__(
         self,
         render_config: Union[dict, None] = None,
+        sampler_config: Union[dict, None] = None
     ):
         self.latents: np.array = None
         self.samples: np.array = None
         self.renderer = PILRenderer(render_config)
-        # self.sampler = Sampler(dist_config)
+        self.sampler = Sampler(sampler_config)
 
     def generate(self, n_samples: int = 1):
         """
@@ -46,8 +48,9 @@ class ShapesDatasetGenerator:
         """
         Generate latent vectors for the dataset.
         """
-        dist = Beta(torch.tensor([2.0]), torch.tensor([5.0]))
-        return dist.sample((n_samples, 2)).numpy().reshape((n_samples, 2))
+        # dist = Beta(torch.tensor([2.0]), torch.tensor([5.0]))
+        # return dist.sample((n_samples, 2)).numpy().reshape((n_samples, 2))
+        return self.sampler.sample((n_samples, 2)).numpy().reshape((n_samples, 2))
 
     def generate_samples(self):
         """
