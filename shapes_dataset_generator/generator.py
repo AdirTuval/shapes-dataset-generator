@@ -43,6 +43,7 @@ class ShapesDatasetGenerator:
         - latents: A list of latent vectors.
         """
         self.latents = latents
+        return self
 
     def generate_latents(self, n_samples: int = 1):
         """
