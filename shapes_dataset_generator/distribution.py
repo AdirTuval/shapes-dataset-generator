@@ -6,7 +6,7 @@ DISTRIBUTIONS_DICT = {
     "beta": Beta
 }
 
-class Sampler:
+class Distribution:
     def __init__(self, config: Union[dict, None] = None):
         if config is None:
             config = {"type": "uniform", "params": [0.0, 1.0]}

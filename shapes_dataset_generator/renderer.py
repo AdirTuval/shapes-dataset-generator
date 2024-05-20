@@ -1,10 +1,12 @@
 from typing import Union
-from PIL import Image, ImageDraw
+import numpy as np
+from PIL import Image, ImageDraw, ImageColor
 from shapes_dataset_generator.shapes_dataset_generator.sample_config import SampleConfig
 from shapes_dataset_generator.shapes_dataset_generator.consts import (
     DEFAULT_CANVAS_SIZE,
     DEFAULT_CANVAS_BACKGROUND_COLOR,
-    DEFAULT_SAMPLE_COLOR,
+    DEFAULT_SAMPLE_COLOR_1,
+    DEFAULT_SAMPLE_COLOR_2,
     ANTIALIAS,
 )
 
@@ -12,6 +14,7 @@ CANVAS_SIZE = "canvas_size"
 BACKGROUND_COLOR = "background_color"
 ANTI_ALIAS = "anti_alias"
 SAMPLE_COLOR = "sample_color"
+SAMPLE_COLOR_2 = "sample_color_2"
 
 
 class PILRenderer:
@@ -21,6 +24,7 @@ class PILRenderer:
 
     def __init__(self, config: Union[dict, None] = None):
         self.config = self.fill_in_missing_default_values(config)
+        self.convert_colors_to_rgb()
 
         # Set the configuration
         self.enlarged_canvas_size: tuple = (
@@ -56,9 +60,6 @@ class PILRenderer:
         # Reset the canvas
         self.canvas.paste(self.canvas_background)
 
-        # is constant sample color
-        sample_color = self.config[SAMPLE_COLOR] if SAMPLE_COLOR in self.config else sample_config.get_color()
-
         # Draw the shape
         self.draw.regular_polygon(
             (
@@ -66,13 +67,17 @@ class PILRenderer:
                 self.get_sample_radius(sample_config.size),
             ),
             sample_config.get_n_sides(),
-            fill=sample_color,
+            fill=self.get_sample_color(sample_config.color),
         )
 
         # Resize the image
         resize_canvas = self.canvas.resize(self.original_canvas_size, Image.LANCZOS)
         # Return the image
         return resize_canvas
+
+    def convert_colors_to_rgb(self):
+        self.config[SAMPLE_COLOR] = ImageColor.getrgb(self.config[SAMPLE_COLOR])
+        self.config[SAMPLE_COLOR_2] = ImageColor.getrgb(self.config[SAMPLE_COLOR_2])
 
     def fill_in_missing_default_values(self, config: dict) -> dict:
         """
@@ -114,6 +119,12 @@ class PILRenderer:
         """
         return size * self.enlarged_canvas_size[0]
     
+    def get_sample_color(self, color_val : float):
+        high_color = np.array(self.config[SAMPLE_COLOR])
+        low_color = np.array(self.config[SAMPLE_COLOR_2])
+        interpolated_color = high_color * color_val + (1 - color_val) * low_color
+        return tuple(interpolated_color.astype(int))
+
     def convert_sample_coordinates_to_image_coordinates(self, sample_config : SampleConfig) -> tuple:
         """
         Convert the sample coordinates to image coordinates.
@@ -143,4 +154,6 @@ class PILRenderer:
             CANVAS_SIZE: DEFAULT_CANVAS_SIZE,
             BACKGROUND_COLOR: DEFAULT_CANVAS_BACKGROUND_COLOR,
             ANTI_ALIAS: ANTIALIAS,
+            SAMPLE_COLOR: DEFAULT_SAMPLE_COLOR_1,
+            SAMPLE_COLOR_2: DEFAULT_SAMPLE_COLOR_2,
         }
