@@ -8,6 +8,8 @@ from shapes_dataset_generator.shapes_dataset_generator.consts import (
     DEFAULT_SAMPLE_COLOR_1,
     DEFAULT_SAMPLE_COLOR_2,
     ANTIALIAS,
+    SIZE_HIGH,
+    SIZE_LOW,
 )
 
 CANVAS_SIZE = "canvas_size"
@@ -105,19 +107,17 @@ class PILRenderer:
         Returns:
         - radius: A float.
         """
-        return (self.get_sample_width(size / 2)) * (2 ** 0.5)
+        diameter = self.get_sample_width(size) * (2 ** 0.5)
+        return diameter / 2
     
     def get_sample_width(self, size: float) -> float:
         """
-        Get the width of the sample.
-
-        Args:
-        - size: A float.
-
-        Returns:
-        - width: A float.
+        width is in range [0.15, 0.35] of the canvas' width.
         """
-        return size * self.enlarged_canvas_size[0]
+        interpolated_size = SIZE_LOW + (SIZE_HIGH - SIZE_LOW) * size
+        width_f = interpolated_size ** 0.5
+        width = width_f * self.enlarged_canvas_size[0]
+        return width
     
     def get_sample_color(self, color_val : float):
         high_color = np.array(self.config[SAMPLE_COLOR])
@@ -128,19 +128,16 @@ class PILRenderer:
     def convert_sample_coordinates_to_image_coordinates(self, sample_config : SampleConfig) -> tuple:
         """
         Convert the sample coordinates to image coordinates.
-
-        Args:
-        - sample_config: A SampleConfig object.
-
-        Returns:
-        - coordinates: A tuple of floats.
         """
         x, y, size = sample_config.x, sample_config.y, sample_config.size
-        offset = self.get_sample_width(size) / 2
+        offset = self.get_max_offset()
         effective_canvas_width_and_height = self.enlarged_canvas_size[0] - (offset * 2)
         x_coord = effective_canvas_width_and_height * x + offset
         y_coord = effective_canvas_width_and_height * y + offset
         return x_coord, y_coord
+
+    def get_max_offset(self):
+        return self.get_sample_width(1.0) / 2
 
     @staticmethod
     def get_default_config() -> dict:

@@ -24,4 +24,6 @@ class Factors:
         """
         Convert a list of factors into a dictionary.
         """
+        if len(l) != len(self):
+            raise ValueError("Incorrect number of factors given")
         return dict(zip(self.factors, l))
