@@ -1,6 +1,6 @@
 from .shapes import Shape
 
-DEFAULT_SAMPLE_SIZE: float = 0
+DEFAULT_SAMPLE_SIZE: float = 0.1
 DEFAULT_SAMPLE_COLOR: float = 1
 DEFAULT_SAMPLE_SHAPE: Shape = Shape.SQUARE
 DEFAULT_SAMPLE_X: float = 0.5
