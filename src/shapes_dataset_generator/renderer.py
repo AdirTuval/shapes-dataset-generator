@@ -1,8 +1,8 @@
 from typing import Union
 import numpy as np
 from PIL import Image, ImageDraw, ImageColor
-from shapes_dataset_generator.shapes_dataset_generator.sample_config import SampleConfig
-from shapes_dataset_generator.shapes_dataset_generator.consts import (
+from shapes_dataset_generator.sample_config import SampleConfig
+from shapes_dataset_generator.consts import (
     DEFAULT_CANVAS_SIZE,
     DEFAULT_CANVAS_BACKGROUND_COLOR,
     DEFAULT_SAMPLE_COLOR_1,

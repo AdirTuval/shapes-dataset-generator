@@ -1,10 +1,10 @@
 import numpy as np
 from typing import Union
 
-from shapes_dataset_generator.shapes_dataset_generator.sample_config import SampleConfigGenerator
-from shapes_dataset_generator.shapes_dataset_generator.renderer import PILRenderer
-from shapes_dataset_generator.shapes_dataset_generator.distribution import Distribution
-from shapes_dataset_generator.shapes_dataset_generator.factors import Factors
+from shapes_dataset_generator.sample_config import SampleConfigGenerator
+from shapes_dataset_generator.renderer import PILRenderer
+from shapes_dataset_generator.distribution import Distribution
+from shapes_dataset_generator.factors import Factors
 
 
 class ShapesDatasetGenerator:

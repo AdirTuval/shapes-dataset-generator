@@ -1,1 +1,0 @@
-from .shapes_dataset_generator.generator import ShapesDatasetGenerator

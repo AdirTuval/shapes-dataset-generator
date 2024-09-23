@@ -1,5 +1,5 @@
 import numpy as np
-from shapes_dataset_generator.shapes_dataset_generator.consts import (
+from shapes_dataset_generator.consts import (
     Shape,
     DEFAULT_SAMPLE_SIZE,
     DEFAULT_SAMPLE_COLOR,
